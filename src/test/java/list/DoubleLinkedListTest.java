@@ -31,6 +31,7 @@ public class DoubleLinkedListTest {
 
     @Test
     public void add() {
+
         DoubleNode node1 = new DoubleNode(1);
         DoubleNode node2 = new DoubleNode(2);
         DoubleNode node3 = new DoubleNode(3);
