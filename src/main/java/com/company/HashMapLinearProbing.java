@@ -6,7 +6,10 @@ class HashMap {
 
     /**
      * Default capacity is the max size of the HashMap, now it is 10
-     * Current size it is a size of HashMap at the moment
+     * The default load factor = 0.7 is optimal for space/time tradeoff
+     * The threshold has the value which is load factor * capacity
+     * Current size it is a number of elements in HashMap at the moment
+     *
      */
 
     private static final int DEFAULT_CAPACITY = 10;
@@ -18,7 +21,7 @@ class HashMap {
     private Integer[] keys;
     private Long[] values;
 
-    public HashMap() {
+    HashMap() {
         this(DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR);
     }
 
@@ -27,7 +30,18 @@ class HashMap {
         this(capacity, DEFAULT_LOAD_FACTOR);
     }
 
-    public HashMap(int capacity, double loadFactor) {
+    /**
+     * Constructs an HashMap with the specified default
+     * capacity and load factor.
+     *
+     * @param capacity   - the initial capacity
+     * @param loadFactor -   the load factor
+     * @throws IllegalArgumentException if the initial capacity is negative
+     *                                  or the load factor is nonpositive
+     */
+
+
+    private HashMap(int capacity, double loadFactor) {
         if (capacity <= 0) throw new IllegalArgumentException("Wrong capacity: " + capacity);
 
         if (loadFactor <= 0 || Double.isNaN(loadFactor) || Double.isInfinite(loadFactor))
@@ -47,7 +61,7 @@ class HashMap {
      * @return current size of the HashMap
      */
 
-    public int getSize() {
+    int getSize() {
         return currentSize;
     }
 
@@ -56,7 +70,7 @@ class HashMap {
      *
      * @return true or false depending whether the HashMap is empty
      */
-    public boolean isEmpty() {
+    boolean isEmpty() {
         return currentSize == 0;
     }
 
@@ -64,14 +78,14 @@ class HashMap {
      * increaseCapacity method
      * If current capacity of HashMap is almost max, this method increases it
      */
-    public void increaseCapacity() {
+    private void increaseCapacity() {
         capacity = (2 * capacity) + 1;
 
     }
 
     /**
-     * resizeTable method performs key table and value table elements swap
-     * to
+     * resizeTable method the method allows to transfer keys and values parameters
+     * to a large table
      */
 
     private void resizeTable() {
@@ -106,7 +120,7 @@ class HashMap {
     }
 
 
-    public Long put(Integer key, Long value) {
+    Long put(Integer key, Long value) {
         int hash = getHash(key);
         int i = hash;
         if (currentSize >= threshold) {
@@ -131,7 +145,7 @@ class HashMap {
         return value;
     }
 
-    public Long get(Integer key) {
+    Long get(Integer key) {
         int i = getHash(key);
         while (keys[i] != null) {
             if (keys[i].equals(key)) {
@@ -143,7 +157,7 @@ class HashMap {
 
     }
 
-    public void printHashMap() {
+    void printHashMap() {
         System.out.println("\n Hash Map: ");
         for (int i = 0; i < DEFAULT_CAPACITY; i++)
             if (keys[i] != null) {
